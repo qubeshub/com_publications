@@ -737,13 +737,13 @@ class Publications extends SiteController
 			]);
 
 			$this->setView('about', 'default');
-			$this->view->config      = $this->config;
-			$this->view->publication = $this->model;
-			$this->view->authorized  = $authorized;
-			$this->view->restricted  = $restricted;
-			$this->view->version     = $publicationVersionId;
-			$this->view->bundle      = $bundle;
-			$this->view->sections    = $sections;
+			$this->view->set('config', $this->config);
+			$this->view->set('publication', $this->model);
+			$this->view->set('authorized', $authorized);
+			$this->view->set('restricted', $restricted);
+			$this->view->set('version', $publicationVersionId);
+			$this->view->set('bundle', $bundle);
+			$this->view->set('sections', $sections);
 			$body = $this->view->loadTemplate();
 
 			// Log page view (public pubs only)
@@ -781,21 +781,21 @@ class Publications extends SiteController
 		             Request::getString('base_url') : 
 					 'index.php?option=' . $this->_option) . '&id=' . $this->_identifier . '&v=' . $this->_version;
 
-		$this->view->version        = $this->model->versionAlias;
-		$this->view->config         = $this->config;
-		$this->view->option         = $this->_option;
-		$this->view->publication    = $this->model;
-		$this->view->authorized     = $authorized;
-		$this->view->restricted     = $restricted;
-		$this->view->cats           = $cats;
-		$this->view->tab            = $tab;
-		$this->view->sections       = $sections;
-		$this->view->database       = $this->database;
-		$this->view->filters        = $filters;
-		$this->view->lastPubRelease = $lastPubRelease;
-		$this->view->contributable  = $this->_contributable;
-		$this->view->base_url       = $base_url;
-		$this->view->active_key     = (Request::getString('base_url') ? 'tab_active' : 'active');
+		$this->view->set('version', $this->model->versionAlias);
+		$this->view->set('config', $this->config);
+		$this->view->set('option', $this->_option);
+		$this->view->set('publication', $this->model);
+		$this->view->set('authorized', $authorized);
+		$this->view->set('restricted', $restricted);
+		$this->view->set('cats', $cats);
+		$this->view->set('tab', $tab);
+		$this->view->set('sections', $sections);
+		$this->view->set('database', $this->database);
+		$this->view->set('filters', $filters);
+		$this->view->set('lastPubRelease', $lastPubRelease);
+		$this->view->set('contributable', $this->_contributable);
+		$this->view->set('base_url', $base_url);
+		$this->view->set('active_key', (Request::getString('base_url') ? 'tab_active' : 'active'));
 
 		if ($this->getError())
 		{
@@ -898,8 +898,8 @@ class Publications extends SiteController
 					'name'   => 'view',
 					'layout' => '_contents'
 				]);
-				$view->model  = $this->model;
-				$view->option = $this->_option;
+				$view->set('model', $this->model);
+				$view->set('option', $this->_option);
 				$view->display();
 
 				return;
@@ -1335,8 +1335,8 @@ class Publications extends SiteController
 			'name'   => 'submit',
 			'layout' => 'default'
 		));
-		$this->view->option = $this->_option;
-		$this->view->config = $this->config;
+		$this->view->set('option', $this->_option);
+		$this->view->set('config', $this->config);
 
 		// Set page title
 		$this->_task_title = Lang::txt('COM_PUBLICATIONS_SUBMIT');
@@ -1497,9 +1497,9 @@ class Publications extends SiteController
 				'name'   => 'error',
 				'layout' => 'restricted'
 			));
-			$this->view->error  = Lang::txt('COM_PUBLICATIONS_ERROR_NOT_FROM_CREATOR_GROUP');
-			$this->view->title  = $this->title;
-			$this->view->option = $this->_option;
+			$this->view->set('error', Lang::txt('COM_PUBLICATIONS_ERROR_NOT_FROM_CREATOR_GROUP'));
+			$this->view->set('title', $this->title);
+			$this->view->set('option', $this->_option);
 			$this->view->display();
 			return;
 		}
@@ -1518,7 +1518,7 @@ class Publications extends SiteController
 		);
 
 		$content = Event::trigger('projects.onProject', $plugin_params);
-		$this->view->content = (is_array($content) && isset($content[0]['html'])) ? $content[0]['html'] : '';
+		$this->view->set('content', (is_array($content) && isset($content[0]['html'])) ? $content[0]['html'] : '');
 
 		if (isset($content[0]['msg']) && !empty($content[0]['msg']))
 		{
@@ -1549,12 +1549,12 @@ class Publications extends SiteController
 		}
 
 		// Output HTML
-		$this->view->project = $project;
-		$this->view->action  = $action;
-		$this->view->pid     = $pid;
-		$this->view->title   = $this->_title;
-		$this->view->msg     = $this->getNotifications('success');
-		$error               = $this->getError() ? $this->getError() : $this->getNotifications('error');
+		$this->view->set('project', $project);
+		$this->view->set('action', $action);
+		$this->view->set('pid', $pid);
+		$this->view->set('title', $this->_title);
+		$this->view->set('msg', $this->getNotifications('success'));
+		$error = $this->getError() ? $this->getError() : $this->getNotifications('error');
 		if ($error)
 		{
 			$this->view->setError($error);
