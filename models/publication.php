@@ -2621,11 +2621,9 @@ class Publication extends Obj
 	/**
 	 * Get FOS (Field of Science and Technology) tag according the Subject tag id
 	 *
-	 * @param   int  $tagid
-	 *
-	 * @return  object array or false
+	 * @return  object or false
 	 */
-	public function getFOSTag($tagid)
+	public function getFOSTag()
 	{
 		// Check whether the version exists
 		if (!$this->exists())
@@ -2637,7 +2635,7 @@ class Publication extends Obj
 		
 		$tagsObj = new Helpers\Tags($this->_db);
 		
-		return $tagsObj->getFOSTag($tagid);
+		return $tagsObj->getFOSTag($this->version->id);
 	}
 	
 	/**

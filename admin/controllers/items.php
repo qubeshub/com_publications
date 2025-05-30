@@ -897,22 +897,13 @@ class Items extends AdminController
 				}
 			}
 		}
+		
+		// // Incoming tags
+		// $tags = Request::getString('tags', '', 'post');
 
-		// Update DOI with latest information
-		if ($this->model->version->doi && !$action)
-		{
-			// Update DOI if locally issued
-			if (preg_match("/" . $doiService->_configs->shoulder . "/", $this->model->version->doi))
-			{
-				$doiService->set('authors', $authors);
-				$doiService->update($this->model->version->doi, true);
-
-				if ($doiService->getError())
-				{
-					$this->setError($doiService->getError());
-				}
-			}
-		}
+		// // Save the tags
+		// $rt = new Helpers\Tags($this->database);
+		// $rt->tag_object(User::get('id'), $this->model->version->id, $tags, 1, true);
 
 		// Incoming keywords
 		$keywords = explode(',', Request::getString('tags', '', 'post'));
@@ -926,6 +917,28 @@ class Items extends AdminController
 		$rt = new Helpers\Tags($this->database);
 		$rt->tag_existing_object($this->model->version->id, $tags);
 		// $rt->tag_object(User::get('id'), $this->model->version->id, $tags, 1, true);
+
+		// Update DOI with latest information
+		if ($this->model->version->doi && !$action)
+		{
+			if (preg_match("/" . $doiService->_configs->shoulder . "/", $this->model->version->doi))
+			{
+				$doiService->set('authors', $authors);
+				
+				$fosTag = $this->model->getFOSTag();
+				if (!empty($fosTag))
+				{
+					$doiService->set('fosTag', $fosTag);
+				}
+				
+				$doiService->update($this->model->version->doi, true);
+
+				if ($doiService->getError())
+				{
+					$this->setError($doiService->getError());
+				}
+			}
+		}
 
 		// Email config
 		$pubtitle = \Hubzero\Utility\Str::truncate($this->model->version->title, 100);
