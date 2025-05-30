@@ -822,6 +822,7 @@ class Items extends AdminController
 			// Update DOI if locally issued
 			if (preg_match("/" . $doiService->_configs->shoulder . "/", $this->model->version->doi))
 			{
+				$doiService->set('authors', $authors);
 				$doiService->update($this->model->version->doi, true);
 
 				if ($doiService->getError())
@@ -881,6 +882,7 @@ class Items extends AdminController
 						if ($this->model->version->doi
 							&& preg_match("/" . $doiService->_configs->shoulder . "/", $this->model->version->doi))
 						{
+							$doiService->set('authors', $authors);
 							$doiService->update($this->model->version->doi, true);
 
 							if ($doiService->getError())
@@ -1016,6 +1018,7 @@ class Items extends AdminController
 						if ($this->model->version->doi
 							&& preg_match("/" . $doiService->_configs->shoulder . "/", $this->model->version->doi))
 						{
+							$doiService->set('authors', $authors);
 							$doiService->update($this->model->version->doi, true);
 							
 							$resURL = $doiService->_configs->livesite . DS . 'index.php?option=' . $this->_option . '&controller=' . $this->_controller . '&task=tombstone' . '&id=' . $id . '&v=' . $this->model->version->version_number;
