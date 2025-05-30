@@ -312,14 +312,27 @@ class Publication extends Table
 		}
 		if (isset($filters['search']) && $filters['search'] != '')
 		{
-			$query .= "AND (MATCH (V.title) AGAINST (" . $this->_db->quote($filters['search']) . ") OR MATCH (V.abstract, V.description) AGAINST (" . $this->_db->quote($filters['search']) . ")) ";
-			
-			// $componentParams = Component::params('com_publications');
-			// if ($componentParams->get('include_author_name_in_search'))
-			// {
-			// 	$query .= " OR (V.id in (SELECT publication_version_id"
-			// 		.	" from jos_publication_authors as A where lower(A.name) like '%$text%'))";
-			// }
+				$componentParams = Component::params('com_publications');
+				$words = array();
+				$ws = explode(' ', $filters['search']);
+				foreach ($ws as $w)
+				{
+					$w = trim($w);
+					if (strlen($w) > 2)
+					{
+						$words[] = $w . '*';
+					}
+				}
+				$text = implode(' ', $words);
+
+				$query .= " AND ((MATCH(V.title) AGAINST ('$text' IN BOOLEAN MODE)) OR" 
+				. " (MATCH(V.abstract,V.description) AGAINST ('$text' IN BOOLEAN MODE))) ";
+
+				if ($componentParams->get('include_author_name_in_search'))
+				{
+					$query .= " OR (V.id in (SELECT publication_version_id"
+						.	" from jos_publication_authors as A where lower(A.name) like '%$text%'))";
+				}
 		}
 
 		// Do not show deleted
