@@ -158,7 +158,7 @@ class Tags extends \Hubzero\Base\Obj
 	 */
 	public function getAllTags($vid)
 	{
-		$sql = "SELECT DISTINCT jt.* FROM $this->_tag_tbl AS jt LEFT JOIN $this->_obj_tbl AS jto ON jt.id = jto.tagid WHERE jto.objectid = $this->_db->quote($vid)";
+		$sql = "SELECT DISTINCT jt.* FROM $this->_tag_tbl AS jt LEFT JOIN $this->_obj_tbl AS jto ON jt.id = jto.tagid WHERE jto.objectid = $vid";
 		$this->_db->setQuery($sql);
 		return $this->_db->loadObjectList();
 	}
@@ -641,8 +641,9 @@ class Tags extends \Hubzero\Base\Obj
 	public function countTags($id)
 	{
 		$sql = "SELECT COUNT(*) FROM $this->_tag_tbl AS t,
-			$this->_obj_tbl AS rt WHERE rt.objectid=$this->_db->quote($id)
+			$this->_obj_tbl AS rt WHERE rt.objectid=$id
 			AND rt.tbl='$this->_tbl' AND rt.tagid=t.id";
+
 		$this->_db->setQuery( $sql );
 		return $this->_db->loadResult();
 	}
