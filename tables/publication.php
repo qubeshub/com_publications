@@ -570,7 +570,7 @@ class Publication extends Table
 		}
 
 		$now = Date::toSql();
-		$alias = str_replace(':', '-', $alias);
+		$alias = $alias ? str_replace(':', '-', $alias) : '';
 
 		$sql  = "SELECT V.*, C.id as id, C.category, C.master_type,
 				C.project_id, C.access as master_access, C.master_doi,
