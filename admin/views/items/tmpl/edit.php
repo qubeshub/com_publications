@@ -168,6 +168,13 @@ $panels = array(
 				</div>
 			</fieldset>
 			<fieldset class="adminform">
+				<legend><span><?php echo Lang::txt('COM_PUBLICATIONS_FIELD_DISABLE_DOWNLOAD_LINK'); ?></span></legend>
+				<div class="input-wrap">
+					<input type="checkbox" name="disabledownloadlink" id="disabledownloadlink" <?php if ($this->model->version->downloadDisabled) {echo "checked";} ?>/>
+					<label for="disabledownloadlink"><?php echo Lang::txt('COM_PUBLICATIONS_FIELD_DISABLE_DOWNLOAD_DESCRIPTION'); ?></label>
+				</div>
+			</fieldset>
+			<fieldset class="adminform">
 				<legend><span><?php echo Lang::txt('COM_PUBLICATIONS_FIELDSET_KEYWORDS'); ?></span></legend>
 
 				<div class="input-wrap">
