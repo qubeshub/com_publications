@@ -2155,7 +2155,7 @@ class Curation extends Obj
 	{
 		if (empty($this->_pub))
 		{
-			throw new Exception(Lang::txt('COM_PUBLICATIONS_FILE_NOT_FOUND'), 404);
+			throw new \Exception(Lang::txt('COM_PUBLICATIONS_FILE_NOT_FOUND'), 404);
 		}
 
 		$bundle = $this->_pub->path('base', true) . DS . $this->getBundleName(false, $instructorBundle);
@@ -2165,7 +2165,7 @@ class Curation extends Obj
 
 		if (!is_file($bundle))
 		{
-			throw new Exception(Lang::txt('COM_PUBLICATIONS_FILE_NOT_FOUND'), 404);
+			throw new \Exception(Lang::txt('COM_PUBLICATIONS_FILE_NOT_FOUND'), 404);
 		}
 
 		// Initiate a new content server and serve up the file
@@ -2178,7 +2178,7 @@ class Curation extends Obj
 		if (!$server->serve())
 		{
 			// Should only get here on error
-			throw new Exception(Lang::txt('COM_PUBLICATIONS_SERVER_ERROR'), 404);
+			throw new \Exception(Lang::txt('COM_PUBLICATIONS_SERVER_ERROR'), 404);
 		}
 
 		exit;
