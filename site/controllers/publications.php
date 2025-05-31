@@ -1236,8 +1236,9 @@ class Publications extends SiteController
 					: $HTTP_USER_AGENT;
 
 		// Clean all output buffers (needs PHP > 4.2.0)
-		while (@ob_end_clean())
+		while (ob_get_level())
 		{
+			ob_end_clean();
 		}
 
 		$file = $p . DS . $f;
