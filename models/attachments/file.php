@@ -1366,7 +1366,7 @@ class File extends Base
 			$handle = fopen($hfile, 'w');
 			fwrite($handle, $md5hash);
 			fclose($handle);
-			@chmod($hfile, 0644);
+			chmod($hfile, 0644);
 
 			$objPA->store();
 
