@@ -2409,7 +2409,7 @@ class Curation extends Obj
 		if ($zip->open($tarpath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true)
 		{
 			// Bundle file attachments
-			$attModel->bundleItems(
+			$bundled = $attModel->bundleItems(
 				$zip,
 				$elements,
 				$this->_pub,
@@ -2417,6 +2417,20 @@ class Curation extends Obj
 				$bundleDir,
 				$instructorBundle
 			);
+
+			// If a required element (e.g. the primary files) could not be
+			// bundled, do not finalise a package that is silently missing its
+			// data. Abandon the archive and report failure so callers surface
+			// it instead of serving an incomplete bundle. Large datasets that
+			// exceed the in-request build guard must be pre-built with
+			// app/bin/rebuild-publication-bundle.
+			if ($bundled === false)
+			{
+				$this->setError($attModel->getError());
+				$zip->close();
+				@unlink($tarpath);
+				return false;
+			}
 
 			// Add license file
 			if (file_exists($licFile))
