@@ -1320,7 +1320,7 @@ class Publication extends Obj
 		if (!empty($curatorGroups))
 		{
 			$common = array_intersect($usersgroups, $curatorGroups);
-			if (count($common) > 1)
+			if (count($common) > 0)
 			{
 				$this->params->set('access-curator-publication', true);
 			}
