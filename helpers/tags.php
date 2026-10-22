@@ -12,6 +12,7 @@ use Components\Tags\Models\FocusArea;
 use Route;
 use Date;
 use Lang;
+use User;
 
 require_once \Component::path('com_publications') . DS . 'models' . DS . 'cloud.php';
 
