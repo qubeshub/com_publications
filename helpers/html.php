@@ -1374,7 +1374,6 @@ class Html
 				}
 				else
 				{
-					error_log("1: calling mime_content_type($file)");
 					$mimeType = mime_content_type($file);
 				}
 				if ($mimeType && !in_array($mimeType, $mimeTypes))
@@ -1428,7 +1427,6 @@ class Html
 			}
 			else
 			{
-				error_log("2: calling mime_content_type($file)");
 				$mimeType = mime_content_type($file);
 			}
 
