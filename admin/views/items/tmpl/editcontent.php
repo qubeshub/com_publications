@@ -97,7 +97,7 @@ if ($tmpl != 'component')
 								<input type="checkbox" name="attachments[<?php echo $attach->id; ?>][access]" title="Instructors only" <?php echo ($attach->access ? "checked" : ""); ?>/>
 								<?php if ($attach->role == 3) { ?>
 									<label><?php echo Lang::txt('COM_PUBLICATIONS_FIELD_ATTACHMENT_GALLERY_DESCRIPTION'); ?>:</label>
-									<input type="text" name="attachments[<?php echo $attach->id; ?>][attribs]" maxlength="250" value="<?php echo $attach->attribs; ?>" />
+									<textarea name="attachments[<?php echo $attach->id; ?>][attribs]" rows="10" cols="60" maxlength="5000" value="<?php echo $attach->attribs; ?>" placeholder="Enter up to 5000 characters..."><?php echo $attach->attribs;; ?></textarea>
 								<?php } ?>
 							</div>
 						<?php } ?>
