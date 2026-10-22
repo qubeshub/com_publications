@@ -371,7 +371,7 @@ class File extends Base
 		if ($handler)
 		{
 			// Handler will draw list
-			$html = $handler->drawList($attachments, $configs, $pub, $authorized);
+			$html = $handler->drawList($attachments, $configs, $pub, $authorized, $elementId);
 			if ($html)
 			{
 				return $html;
@@ -1140,6 +1140,7 @@ class File extends Base
 		$access = (Request::getInt('access', 0) ? 5 : 0);
 		$name  = Request::getString('filename', '');
 		$thumb = Request::getInt('makedefault', 0);
+		$description = Request::getString('description', '');
 
 		// Get configs
 		$configs = $this->getConfigs($element, $elementId, $pub, $blockParams);
@@ -1155,6 +1156,7 @@ class File extends Base
 		// Update label
 		$row->title       = $title;
 		$row->access      = $access;
+		$row->attribs     = $description;
 		$row->modified_by = User::get('id');
 		$row->modified    = Date::toSql();
 

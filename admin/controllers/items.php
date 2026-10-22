@@ -295,6 +295,12 @@ class Items extends AdminController
 				{
 					$pContent->title = $attach['title'];
 					$pContent->access = (array_key_exists('access', $attach) ? 5 : 0);
+					
+					if (!empty($attach['attribs']))
+					{
+						$pContent->attribs = $attach['attribs'];
+					}
+					
 					$pContent->store();
 				}
 			}
