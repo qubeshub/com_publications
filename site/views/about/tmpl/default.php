@@ -153,7 +153,7 @@ $schema = $metaElements->getSchema();
 				elseif ($value = $metaElements->display($field->type, $data[$field->name]))
 				{
 					?>
-					<h3><?php echo $field->label; ?></h3>
+					<h3><?php echo $this->escape($field->label); ?></h3>
 					<div class="pub-content">
 						<?php echo $value; ?>
 					</div>
