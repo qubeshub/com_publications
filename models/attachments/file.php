@@ -568,6 +568,7 @@ class File extends Base
 			$attachments,
 			$this->_name
 		);
+		$attachments = $attachments ? (array) $attachments : array();
 
 		$disabled = 0;
 		$pop = null;
@@ -899,6 +900,7 @@ class File extends Base
 
 		// Sort out attachments for this element
 		$attachments = $this->_parent->getElementAttachments($elementId, $attachments, $this->_name);
+		$attachments = $attachments ? (array) $attachments : array();
 
 		if (!$forceDownload && $configs->handler)
 		{

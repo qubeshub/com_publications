@@ -1808,6 +1808,13 @@ class Publications extends SiteController
 		$tags    = Request::getString('tags', '');
 		$no_html = Request::getInt('no_html', 0);
 
+		// Only a publication the caller can see may be tagged
+		$pub = new Models\Publication($id);
+		if (!$pub->exists() || !$pub->access('view'))
+		{
+			App::abort(403, Lang::txt('JERROR_ALERTNOAUTHOR'));
+		}
+
 		// Process tags
 		$rt = new Helpers\Tags($this->database);
 		$rt->tag_object(User::get('id'), $id, $tags, 1, 0);
@@ -2061,19 +2068,19 @@ class Publications extends SiteController
 			$rt->tag_object(User::get('id'), $version->get('id'), $tags, 1);
 		}
 
-		// Copy citations
+		// Copy citations (associations are keyed on the version id, see Publication::getCitations)
 		include_once Component::path('com_citations')  . '/models/association.php';
 
 		$citations = \Components\Citations\Models\Association::all()
 			->whereEquals('tbl', 'publication')
-			->whereEquals('oid', $pub_id)
+			->whereEquals('oid', $vid)
 			->rows();
 		foreach ($citations as $citation)
 		{
 			$ca = \Components\Citations\Models\Association::blank();
 			$ca->set('cid', $citation->cid);
 			$ca->set('tbl', $citation->tbl);
-			$ca->set('oid', $pub_id);
+			$ca->set('oid', $version->get('id'));
 
 			if (!$ca->save())
 			{
