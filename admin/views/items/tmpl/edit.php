@@ -113,7 +113,7 @@ $panels = array(
 				</div>
 				<div class="input-wrap">
 					<label><?php echo Lang::txt('COM_PUBLICATIONS_FIELD_SYNOPSIS'); ?>:</label>
-					<textarea name="abstract" id="pub-abstract" cols="40" rows="3" class="pubinput"><?php echo preg_replace("/\r\n/", "\r", trim($this->model->get('abstract'))); ?></textarea>
+					<textarea name="abstract" id="pub-abstract" cols="40" rows="3" class="pubinput"><?php echo $this->escape(preg_replace("/\r\n/", "\r", trim($this->model->get('abstract')))); ?></textarea>
 				</div>
 				<div class="input-wrap">
 					<label><?php echo Lang::txt('COM_PUBLICATIONS_FIELD_DESCRIPTION'); ?>:</label>
@@ -164,7 +164,7 @@ $panels = array(
 				</div>
 				<div class="input-wrap">
 					<label for="license_text"><?php echo Lang::txt('COM_PUBLICATIONS_FIELD_LICENSE_TEXT'); ?>:</label>
-					<textarea name="license_text" id="license_text" cols="40" rows="5" class="pubinput"><?php echo preg_replace("/\r\n/", "\r", trim($this->model->get('license_text',''))); ?></textarea>
+					<textarea name="license_text" id="license_text" cols="40" rows="5" class="pubinput"><?php echo $this->escape(preg_replace("/\r\n/", "\r", trim($this->model->get('license_text','')))); ?></textarea>
 				</div>
 			</fieldset>
 			<fieldset class="adminform">
@@ -233,7 +233,7 @@ $panels = array(
 					<tr>
 						<th><?php echo Lang::txt('COM_PUBLICATIONS_FIELD_PROJECT'); ?></th>
 						<td>
-							<?php echo $this->model->project()->get('title'); ?>
+							<?php echo $this->escape($this->model->project()->get('title')); ?>
 						</td>
 					</tr>
 					<tr>
@@ -379,7 +379,7 @@ $panels = array(
 							<?php if ($this->model->submitter()) { ?>
 								<tr>
 									<td class="paramlist_key"><?php echo Lang::txt('COM_PUBLICATIONS_FIELD_SUBMITTER'); ?>:</td>
-									<td><?php echo $this->model->submitter()->name; ?></td>
+									<td><?php echo $this->escape($this->model->submitter()->name); ?></td>
 								</tr>
 							<?php } ?>
 							<?php if ($this->model->isPending()) { ?>
